@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tigerhsu.android.uniappandroid">
+
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <!---->
+    <uses-permission android:name="getui.permission.GetuiService.${apk.applicationId}"/>
+    <permission android:name="getui.permission.GetuiService.${apk.applicationId}" android:protectionLevel="normal"/>
+
+    <application
+        android:allowBackup="true"
+        android:theme="@style/AppTheme"
+        android:allowClearUserData="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true">
+        <activity
+            android:name="com.tigerhsu.android.uniappandroid.MainActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="io.dcloud.PandoraEntry"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="user"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="io.dcloud.PandoraEntryActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize|mcc|mnc|fontScale|keyboard"
+            android:hardwareAccelerated="true"
+            android:permission="com.miui.securitycenter.permission.AppPermissionsEditor"
+            android:screenOrientation="user"
+            android:theme="@style/DCloudTheme"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="h56131bcf" />
+            </intent-filter>
+        </activity>
+
+        <!--android:authorities="io.dcloud.simple.dc.fileprovider"-->
+        <provider
+            android:name="io.dcloud.common.util.DCloud_FileProvider"
+            android:authorities="com.tigerhsu.android.uniappandroid.dc.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/dcloud_file_provider" />
+        </provider>
+
+        <!--unipush-->
+        <meta-data android:name="PUSH_APPID" android:value="${plus.unipush.appid}"/>
+        <meta-data android:name="PUSH_APPKEY" android:value="${plus.unipush.appkey}"/>
+        <meta-data android:name="PUSH_APPSECRET" android:value="${plus.unipush.appsecret}"/>
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.service.message"/>
+            </intent-filter>
+        </service>
+        <receiver android:name="com.igexin.sdk.PushReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="com.igexin.sdk.action.refreshls"/>
+                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
+            android:name="com.igexin.sdk.GActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <receiver android:name="io.dcloud.feature.apsGt.GTNotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="${apk.applicationId}.__CREATE_NOTIFICATION"/>
+                <action android:name="${apk.applicationId}.__REMOVE_NOTIFICATION"/>
+                <action android:name="${apk.applicationId}.__CLEAR_NOTIFICATION"/>
+                <action android:name="${apk.applicationId}.__CLILK_NOTIFICATION"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="io.dcloud.feature.apsGt.GTNormalIntentService"/>
+    </application>
+</manifest>

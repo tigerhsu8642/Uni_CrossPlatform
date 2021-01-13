@@ -1,0 +1,22 @@
+1.测试在线推送 即APP打开 在线走个推通道 
+服务端建议使用透传模板 透传消息内容transmissionContent()设置为一下Json格式
+
+{title:"标题",content:"内容",payload:"自定义数据"}
+
+时 会作为普通推送通知处理，在系统通知栏创建消息，点击消息激活APP触发客户端"click"事件 
+//监听系统通知栏消息点击事件  
+
+plus.push.addEventListener('click', function(msg){  
+    //处理点击消息的业务逻辑代码  
+}, false); 
+
+客户端可在click回调里可通过msg.title获取标题、msg.content获取内容、msg.payload获取数据
+
+2.在线/离线推送 在线走个推通道 离线走厂商通道(前提是厂商通道已经配置好)
+为兼容华为 小米 oppo vivo 魅族五大厂商 服务端必须使用透传模板+notify
+
+app打开（即cid在线）走个推通道下发透传消息 方法流程同上1
+
+app后台进程杀死（即cid离线）走厂商通道下发系统通知 intent按照示例替换component里的包名和自定义数据S.payload的值
+客户端点击消息 打开app主页面  在click回调方法里可以拿到intent自定义数据
+具体模板示例代码参考：https://ask.dcloud.net.cn/article/35622
