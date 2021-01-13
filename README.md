@@ -26,3 +26,7 @@ UniAppAndroid 是安卓移动端项目
           intent.putExtra("phone", "13987654321");
       }
       mContext.startActivity(intent);
+
+4、 APK覆盖安装后页面不更新问题：
+      1) 内置的资源版本名称和版本号要高于上一个版本；
+      2) control.xml 中 debug 改成 false  //会出现console.log 日志不输出问题
