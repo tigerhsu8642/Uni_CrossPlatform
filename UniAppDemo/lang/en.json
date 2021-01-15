@@ -1,0 +1,8 @@
+{
+	  "message": {
+		    "inputPhone": "Please input the phone num",
+		    "inputCode": "Please input the identifying code",
+			"binding": "binding",
+			"sendText": "send code"
+	  }
+ }

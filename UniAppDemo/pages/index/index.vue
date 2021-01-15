@@ -3,7 +3,7 @@
 		<view class="main" v-if="!loginStatus">
 			<view class="input-box">
 				<view class="input">
-					<input type="number" placeholder="请输入手机号" v-model="phone" placeholder-class="input-place"></input>
+					<input type="number" :placeholder="$t('message.inputPhone')" v-model="phone" placeholder-class="input-place"></input>
 					<view class="input-err">
 						{{phoneErr}}
 					</view>
@@ -11,40 +11,47 @@
 			</view>
 			<view class="input-box">
 				<view class="input" style="border: none;">
-					<input type="number" placeholder="请输入手机验证码" class="code-input" v-model="messagecode" placeholder-class="input-place" />
+					<input type="number" :placeholder="$t('message.inputCode')" class="code-input" v-model="messagecode" placeholder-class="input-place" />
 					<view class="input-err">
 						{{codeErr}}
 					</view>
 				</view>
 				<view class="code-btn-box">
-					<button type="default" @click="sendCode">{{sendText}}</button>
+					<button type="default" @click="sendCode">{{$t('message.sendText')}}</button>
 					<!-- <button slot="button" round color='#4980F9' size="small" :disabled="sendDisabled" type="primary"></button> -->
 				</view>
 			</view>
 		</view>
 		<view class="btn-row" v-if="!loginStatus">
-			<button class="collectData" round color='#4980F9' type="primary" size="large" :disabled="enterDisabled" @click="getWxOpenid">绑定</button>
+			<button class="collectData" round color='#4980F9' type="primary" size="large" :disabled="enterDisabled" @click="getWxOpenid">{{ $t('message.binding') }}</button>
+		</view>
+		<view class="btn-row">
+			<switchs text="EN|CN" @change="switchChange" />
 		</view>
 	</view>		
 </template>
 
-<script>
+<script>	
+	import Switchs from '../../components/Switchs.vue'
 	export default {
+		components: {
+		      Switchs
+		    },
 		data() {
 			return {
 				phoneErr: "", //手机号错误提示
 				codeErr: '',
 				messagecode: '',
 				phone: '',
-				sendText: "发送验证码",
+				sendText: this.$t('message.sendText'),
 				enterDisabled: false,
 				loginStatus:false
 			}
 		},
 		onLoad() {
-			console.log('App onLoad()')
+			console.log('App onLoad()');
 			this.phone = uni.getStorageSync("phone");
-			console.log('App onLoad() phone ==> '+ this.phone)
+			console.log('App onLoad() phone ==> '+ this.phone);
 		},
 		methods: {
 			//发送验证码倒计时
@@ -85,6 +92,14 @@
 				// #ifdef APP-PLUS					
 					plus.push.createMessage("您已绑定成功!");				
 				// #endif 
+			},
+			
+			switchChange(e){
+				if(e) {
+					this.$i18n.locale = "cn";		
+				} else {					
+					this.$i18n.locale = "en";
+				}
 			}
 		},
 		watch: {

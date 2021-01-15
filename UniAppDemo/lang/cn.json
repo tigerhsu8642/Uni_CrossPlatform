@@ -1,0 +1,8 @@
+{
+	  "message": {
+		    "inputPhone": "请输入手机号",
+		    "inputCode": "请输入手机验证码",
+			"binding": "绑定",
+			"sendText": "发送验证码"
+	  }
+ }
