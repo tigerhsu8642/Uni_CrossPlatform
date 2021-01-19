@@ -98,3 +98,43 @@ en.json：
               this.$i18n.locale = "en";
           }
       }
+      
+      
+第三次更新：Android原生国际化
+ 
+Android原生国际化支持随系统默认语言选择，相关代码如下：
+
+      public Locale getSysLocale() {
+          Locale locale;
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+              locale = LocaleList.getDefault().get(0);
+          } else {
+              locale = Locale.getDefault();
+          }
+          return locale;
+      }
+
+国际化文本资源需要在res目录下添加，比如添加英文就建立values-en目录，在该目录下加入strings.xml资源文件
+
+strings.xml：
+
+      <resources>
+          <string name="app_name">patriarch_tips</string>
+          <string name="introduction">Hello, my friend!</string>
+      </resources>
+
+语言设置及切换Java代码：
+
+      public void setConfiguration() {
+          Locale targetLocale = getLanguageLocale();
+          Configuration configuration = this.getResources().getConfiguration();
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+              configuration.setLocale(targetLocale);
+          } else {
+              configuration.locale = targetLocale;
+          }
+
+          Resources resources = this.getResources();
+          DisplayMetrics dm = resources.getDisplayMetrics();
+          resources.updateConfiguration(configuration, dm);//语言更换生效的代码!
+      }
