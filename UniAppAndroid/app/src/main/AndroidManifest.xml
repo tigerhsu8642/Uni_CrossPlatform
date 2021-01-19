@@ -28,7 +28,7 @@
         android:largeHeap="true"
         android:supportsRtl="true">
         <activity
-            android:name="com.tigerhsu.android.uniappandroid.MainActivity"
+            android:name=".MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,13 +67,14 @@
         <!--android:authorities="io.dcloud.simple.dc.fileprovider"-->
         <provider
             android:name="io.dcloud.common.util.DCloud_FileProvider"
-            android:authorities="com.tigerhsu.android.uniappandroid.dc.fileprovider"
+            android:authorities="com.walklake.android.patriarch_tips.dc.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/dcloud_file_provider" />
         </provider>
+
 
         <!--unipush-->
         <meta-data android:name="PUSH_APPID" android:value="${plus.unipush.appid}"/>

@@ -56,4 +56,6 @@ dependencies {
     implementation "com.facebook.fresco:animated-gif:1.13.0"
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.alibaba:fastjson:1.1.46.android'
+
+    implementation 'org.greenrobot:eventbus:3.0.0'
 }
