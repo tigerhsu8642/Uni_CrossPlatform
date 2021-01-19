@@ -30,3 +30,71 @@ UniAppAndroid 是安卓移动端项目
 4、 APK覆盖安装后页面不更新问题：
       1) 内置的资源版本名称和版本号要高于上一个版本；
       2) control.xml 中 debug 改成 false  //会出现console.log 日志不输出问题
+      
+      
+第二版加入国际化模块，注意如下
+
+1、 安装：npm install vue-i18n --save
+
+2、 main.js 引入声明 
+
+代码如下：
+
+      import VueI18n from 'vue-i18n'  //引入vue-i18n
+      import zh from './lang/cn'
+      import en from './lang/en'
+
+      Vue.use(VueI18n);
+
+      /---------基本使用-----------/
+      const i18n = new VueI18n({
+           locale: 'cn', // 语言标识
+           messages : {
+           'en': en,
+           'cn': zh
+           }
+      })
+      const app = new Vue({
+          i18n,
+          ...App
+      })
+
+3、在lang目录下创建 cn.json , en.json 资源文件
+
+cn.json：
+
+      {
+            "message": {
+                  "inputPhone": "请输入手机号",
+                  "inputCode": "请输入手机验证码",
+                  "binding": "绑定",
+                  "sendText": "发送验证码"
+            }
+       }
+
+ 
+
+en.json：
+
+      {
+            "message": {
+                  "inputPhone": "Please input the phone num",
+                  "inputCode": "Please input the identifying code",
+                  "binding": "binding",
+                  "sendText": "send code"
+            }
+       }
+
+4、调用资源文件
+
+      {{ $t('message.binding') }}
+
+动态切换语言调用：
+
+      switchChange(e){
+          if(e) {
+              this.$i18n.locale = "cn";        
+          } else {                    
+              this.$i18n.locale = "en";
+          }
+      }
